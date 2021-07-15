@@ -12,12 +12,8 @@
 
 .productImage {
   /* width: 200px;
-  height: 200px;
+  height: 200px; */
   background-color: white;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center; */
   object-fit: contain;
   height: 200px;
 }
@@ -36,4 +32,12 @@
   .allProducts {
     grid-template-columns: repeat(3, 1fr);
   }
+}
+
+.cat {
+  letter-spacing: 0.1rem;
+}
+
+.singleProduct {
+  border: 2px solid red;
 }

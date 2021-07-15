@@ -1,22 +1,84 @@
 <% layout('layouts/boilerplate.ejs')%>
 <!-- Selling a product form -->
-<div class="addProductForm">
-  <form action="/addProduct" method="POST">
-    <label for="title">Title</label>
-    <input type="text" name="Product[title]" id="title" />
-
-    <label for="description">Description</label>
-    <input type="text" name="Product[description]" id="description" />
-
-    <label for="image">Image URL</label>
-    <input type="text" name="Product[image]" id="image" />
-
-    <label for="price">Price</label>
-    <input type="number" name="Product[price]" id="price" />
-
-    <label for="category">Category</label>
-    <input type="text" name="Product[category]" id="category" />
-
-    <button type="submit">Add Product</button>
-  </form>
+<div class="row">
+  <div class="col-md-6 offset-md-3">
+    <form
+      class="row g-3 needs-validation formStyle mb-3"
+      action="/addProduct"
+      method="POST"
+      novalidate
+    >
+      <img src="/newFormPhoto.jpeg" alt="" />
+      <div class="mb-2">
+        <label for="title" class="form-label">Title</label>
+        <input
+          type="text"
+          class="form-control"
+          id="title"
+          name="Product[title]"
+          required
+          autofocus
+        />
+        <div class="valid-feedback">Looks good!</div>
+      </div>
+      <div class="mb-2">
+        <label for="description" class="form-label">Description</label>
+        <textarea
+          type="text"
+          class="form-control"
+          id="description"
+          name="Product[description]"
+          required
+        ></textarea>
+        <div class="valid-feedback">Looks good!</div>
+      </div>
+      <div class="mb-2">
+        <label for="price" class="form-label">Price</label>
+        <input
+          type="number"
+          class="form-control"
+          id="price"
+          name="Product[price]"
+          min="0"
+          required
+        />
+        <div class="valid-feedback">Looks good!</div>
+      </div>
+      <div class="mb-2">
+        <label for="image" class="form-label">Image</label>
+        <input
+          type="text"
+          class="form-control"
+          id="image"
+          name="Product[image]"
+          required
+        />
+        <div class="valid-feedback">Looks good!</div>
+      </div>
+      <div class="mb-2">
+        <label for="category" class="form-label">Category</label>
+        <select
+          class="form-select"
+          id="category"
+          name="Product[category]"
+          required
+        >
+          <option selected disabled value="">Choose...</option>
+          <option value="Sports">Sports</option>
+          <option value="Stationary">Stationary</option>
+          <option value="Electronics">Electronics</option>
+          <option value="Living">Living</option>
+          <option value="Others">Others</option>
+        </select>
+        <div class="valid-feedback">Looks good!</div>
+      </div>
+      <!-- <div class="col-mb-4">
+    <label for="image" class="form-label">Image</label>
+    <input type="file" class="form-control" aria-label="file example" id="image" name="Product[image]" />
+  </div> -->
+      <div class="mb-2 d-grid">
+        <button class="btn btn-primary" type="submit">Add Product</button>
+      </div>
+    </form>
+  </div>
 </div>

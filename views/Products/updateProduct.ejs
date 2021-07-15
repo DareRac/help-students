@@ -1,47 +1,112 @@
 <% layout('layouts/boilerplate.ejs')%>
 
-<div class="updateProduct">
-  <form action="/showProduct/<%= product._id %>?_method=PUT" method="POST">
+<!-- <div class="updateProduct">
+  <form >
     <label for="title">Title</label>
-    <input
-      type="text"
-      name="Product[title]"
-      id="title"
-      value="<%= product.title%>"
-    />
+    <input type="text" name="Product[title]" id="title" />
 
     <label for="description">Description</label>
-    <input
-      type="text"
-      name="Product[description]"
-      id="description"
-      value="<%= product.description %>"
-    />
+    <input type="text" name="Product[description]" id="description" />
 
     <label for="image">Image URL</label>
-    <input
-      type="text"
-      name="Product[image]"
-      id="image"
-      value="<%= product.image %>"
-    />
+    <input type="text" name="Product[image]" id="image" />
 
     <label for="price">Price</label>
-    <input
-      type="number"
-      name="Product[price]"
-      id="price"
-      value="<%= product.price %>"
-    />
+    <input type="number" name="Product[price]" id="price" />
 
     <label for="category">Category</label>
-    <input
-      type="text"
-      name="Product[category]"
-      id="category"
-      value="<%= product.category %>"
-    />
+    <input type="text" name="Product[category]" id="category" />
 
     <button type="submit">Submit</button>
   </form>
+</div> -->
+
+<div class="row">
+  <div class="col-md-6 offset-md-3">
+    <form
+      class="row g-3 needs-validation formStyle mb-3"
+      action="/showProduct/<%= product._id %>?_method=PUT"
+      method="POST"
+      novalidate
+    >
+      <img src="/editFormPhoto.jpeg" alt="" />
+      <div class="mb-2">
+        <label for="title" class="form-label">Title</label>
+        <input
+          type="text"
+          class="form-control"
+          id="title"
+          name="Product[title]"
+          value="<%= product.title%>"
+          required
+          autofocus
+        />
+        <div class="valid-feedback">Looks good!</div>
+      </div>
+      <div class="mb-2">
+        <label for="description" class="form-label">Description</label>
+        <textarea
+          type="text"
+          class="form-control"
+          id="description"
+          name="Product[description]"
+          required
+        >
+<%= product.description %></textarea
+        >
+        <div class="valid-feedback">Looks good!</div>
+      </div>
+      <div class="mb-2">
+        <label for="price" class="form-label">Price</label>
+        <input
+          type="number"
+          class="form-control"
+          id="price"
+          name="Product[price]"
+          min="0"
+          required
+          value="<%= product.price %>"
+        />
+        <div class="valid-feedback">Looks good!</div>
+      </div>
+      <div class="mb-2">
+        <label for="image" class="form-label">Image</label>
+        <input
+          type="text"
+          class="form-control"
+          id="image"
+          name="Product[image]"
+          value="<%= product.image %>"
+          required
+        />
+        <div class="valid-feedback">Looks good!</div>
+      </div>
+      <div class="mb-2">
+        <label for="category" class="form-label">Category</label>
+        <select
+          class="form-select"
+          id="category"
+          name="Product[category]"
+          required
+        >
+          <option selected disabled value="<%= product.category %>">
+            <%= product.category %>
+          </option>
+          <option value="Sports">Sports</option>
+          <option value="Stationary">Stationary</option>
+          <option value="Electronics">Electronics</option>
+          <option value="Living">Living</option>
+          <option value="Others">Others</option>
+        </select>
+        <div class="valid-feedback">Looks good!</div>
+      </div>
+      <!-- <div class="col-mb-4">
+    <label for="image" class="form-label">Image</label>
+    <input type="file" class="form-control" aria-label="file example" id="image" name="Product[image]" />
+  </div> -->
+      <div class="mb-2 d-grid">
+        <button class="btn btn-primary" type="submit">Update Product</button>
+      </div>
+    </form>
+  </div>
 </div>
