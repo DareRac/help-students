@@ -16,11 +16,10 @@ const productSchema = new Schema({
     type: String,
     required: true,
   },
-  //   author: {
-  //     type: Schema.Types.ObjectId,
-  //     contact
-  //     ref: "User",
-  //   },
+  author: {
+    type: Schema.Types.ObjectId,
+    ref: "User",
+  },
   image: {
     type: String,
     required: true,

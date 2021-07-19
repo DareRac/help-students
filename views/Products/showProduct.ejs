@@ -40,7 +40,15 @@
 
 <div>
   <% for(let review of product.reviews){ %>
-  <div>Review: <%= review.body %> Rating: <%= review.rating %></div>
+  <div>
+    Review: <%= review.body %> Rating: <%= review.rating %>
+    <form
+      action="/showProduct/<%= product._id %>/review/<%= review._id %>?_method=DELETE"
+      method="POST"
+    >
+      <button class="btn btn-outline-danger">Delete</button>
+    </form>
+  </div>
 
   <% } %>
 </div>
