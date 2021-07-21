@@ -60,7 +60,7 @@ app.use((req, res, next) => {
   // console.log(req.session) isko consolelog krne pr session mei hum returnTo wala dekh skte h agar vo trigger hua hoga toh
   res.locals.success = req.flash("success"); // ye middleware lagane se mei flash mei jo bhi string pass krunga usko kisi bhi template mei access kr skta hu...for eg mujhe show tempelate ke router mei koi variable pass nhi krana padega ki jisse mei flash wali string ko access kr sku....middleware ki help se direct access ho jaayega
   res.locals.error = req.flash("error");
-  res.locals.currentuser = req.user; // req.user humei user ka email , username , id(mongoose wali) .... ab mei ise pure project mei kahi bhi use kr skta hu...ab hum login aur register wala option navbar mei tab hi dikhayenge jab currentUser exist nhi krega ..aur agar currentUser exist krega toh hum sirf logout wala option show krenge.... req.user humei passport ki help se mila h ... passport sab kuch behind the scene kr deta h .....
+  res.locals.currentUser = req.user; // req.user humei user ka email , username , id(mongoose wali) .... ab mei ise pure project mei kahi bhi use kr skta hu...ab hum login aur register wala option navbar mei tab hi dikhayenge jab currentUser exist nhi krega ..aur agar currentUser exist krega toh hum sirf logout wala option show krenge.... req.user humei passport ki help se mila h ... passport sab kuch behind the scene kr deta h .....
   next();
 });
 
@@ -73,11 +73,11 @@ app.get("/", (req, res) => {
 });
 
 // render addProduct form
-app.get("/addProduct", (req, res) => {
+app.get("/addProduct", isLoggedIn, (req, res) => {
   res.render("Products/addProduct.ejs");
 });
 
-app.post("/addProduct", async (req, res) => {
+app.post("/addProduct", isLoggedIn, async (req, res) => {
   //console.log(req.body.Product);
   const product = new Product(req.body.Product);
   product.author = req.user._id;
@@ -87,14 +87,14 @@ app.post("/addProduct", async (req, res) => {
 
 // show page for all products
 app.get("/allProducts", async (req, res) => {
-  const products = await Product.find({})
-    .populate({
-      path: "reviews",
-      populate: {
-        path: "author",
-      },
-    })
-    .populate("author");
+  const products = await Product.find({});
+  //   .populate({
+  //     path: "reviews",
+  //     populate: {
+  //       path: "author",
+  //     },
+  //   })
+  //   .populate("author");
   res.render("Products/allProducts.ejs", { products });
 });
 
@@ -112,19 +112,18 @@ app.get("/showProduct/:id", async (req, res) => {
   res.render("Products/showProduct.ejs", { product });
 });
 
-app.delete("/showProduct/:id", async (req, res) => {
-  const { id } = req.params;
-  const product = await Product.findByIdAndDelete(id);
-  res.redirect("/allProducts");
-});
+app.get(
+  "/showProduct/:id/edit",
+  isLoggedIn,
+  isProductAuthor,
+  async (req, res) => {
+    const { id } = req.params;
+    const product = await Product.findById(id);
+    res.render("Products/updateProduct.ejs", { product });
+  }
+);
 
-app.get("/showProduct/:id/edit", async (req, res) => {
-  const { id } = req.params;
-  const product = await Product.findById(id);
-  res.render("Products/updateProduct.ejs", { product });
-});
-
-app.put("/showProduct/:id", async (req, res) => {
+app.put("/showProduct/:id", isLoggedIn, isProductAuthor, async (req, res) => {
   const { id } = req.params;
   //console.log(req.body.Product);
   const product = await Product.findByIdAndUpdate(id, { ...req.body.Product });
@@ -133,7 +132,19 @@ app.put("/showProduct/:id", async (req, res) => {
   res.redirect(`/showProduct/${id}`);
 });
 
-app.post("/showProduct/:id/review", async (req, res) => {
+app.delete(
+  "/showProduct/:id",
+  isLoggedIn,
+  isProductAuthor,
+  async (req, res) => {
+    const { id } = req.params;
+    const product = await Product.findByIdAndDelete(id);
+    res.redirect("/allProducts");
+  }
+);
+
+// review routes
+app.post("/showProduct/:id/review", isLoggedIn, async (req, res) => {
   const { id } = req.params;
   const product = await Product.findById(id);
   const review = new Review(req.body.review);
@@ -142,7 +153,7 @@ app.post("/showProduct/:id/review", async (req, res) => {
   product.reviews.push(review);
   await review.save();
   await product.save();
-  console.log(product);
+  //console.log(product);
   res.redirect(`/showProduct/${id}`);
 });
 
@@ -159,6 +170,7 @@ app.delete(
   }
 );
 
+// authentication and authorisation routes
 app.get("/login", (req, res) => {
   res.render("./users/login.ejs");
 });
@@ -170,7 +182,7 @@ app.post(
     failureRedirect: "/login",
   }),
   (req, res) => {
-    req.flash("success", `Welcome ${req.user}!!`);
+    req.flash("success", `Welcome ${req.user.username}!!`);
     const redirectUrl = req.session.returnTo || "/allProducts"; // agar session mei returnTo h toh uspr redirect krega varna /campground pr(jab koi direct login prr tap krega aur login krega toh returnTo exist nhi krega kyuki vo direct login krne gaya h na ki kahi(kahi matlab ki vo login nhi hoga aur new pr tap kra hoga) se redirect hokr login pr gya)
     delete req.session.returnTo; // session mei se delete denge hum returnTo ko kyuki humne usko redirectUrl mei store kr lia h
     res.redirect(redirectUrl);

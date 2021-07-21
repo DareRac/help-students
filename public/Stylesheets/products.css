@@ -38,6 +38,11 @@
   letter-spacing: 0.1rem;
 }
 
-.singleProduct {
-  border: 2px solid red;
+.cardHeight {
+  height: fit-content;
+}
+
+.stickProduct {
+  position: sticky;
+  top: 6rem;
 }

@@ -1,4 +1,4 @@
-<% if(success&& success.length){ %>
+<% if(success && success.length){ %>
 <div class="alert alert-success alert-dismissible fade show" role="alert">
   <%= success %>
   <button
@@ -8,13 +8,14 @@
     aria-label="Close"
   ></button>
 </div>
-<% } %> <% if(error&& error.length){ %>
+<% } %>
 
 <!-- if success does not exist wala loop chalayenge toh usse kaam nhi hoga kyuki success ko consolo log krke dekhoge toh vo ek blank arrat type hoga toh iska matlab success ki length ko bhi check krna padega -->
 <!-- if both the conditions are satisfied then alert will be there -->
 <!-- if loop nhi lagega toh hamesha ek blank alert rhega upar ki side -->
 <!-- boilerplate mei isko include kr lenge fir jaha jaha humei flash dena h waha pr req.flash() krke hum flash display krwa skte h -->
 
+<% if(error && error.length){ %>
 <div class="alert alert-danger alert-dismissible fade show" role="alert">
   <%= error %>
   <button
