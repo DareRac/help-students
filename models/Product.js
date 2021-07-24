@@ -2,10 +2,10 @@ const mongoose = require("mongoose");
 const Review = require("./Review");
 const Schema = mongoose.Schema;
 
-// const ImageSchema = new Schema({
-//   url: String,
-//   filename: String,
-// });
+const ImageSchema = new Schema({
+  url: String,
+  filename: String,
+});
 
 const productSchema = new Schema({
   title: {
@@ -20,10 +20,7 @@ const productSchema = new Schema({
     type: Schema.Types.ObjectId,
     ref: "User",
   },
-  image: {
-    type: String,
-    required: true,
-  },
+  image: [ImageSchema],
   price: {
     type: Number,
     required: true,

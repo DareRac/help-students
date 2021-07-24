@@ -1,3 +1,4 @@
+require("dotenv").config();
 const express = require("express");
 const mongoose = require("mongoose");
 const path = require("path");
@@ -10,6 +11,9 @@ const session = require("express-session");
 const flash = require("connect-flash");
 const passport = require("passport");
 const LocalStrategy = require("passport-local");
+const multer = require("multer");
+const { storage } = require("./Cloudinary/index");
+const upload = multer({ storage });
 
 const { isLoggedIn, isReviewAuthor, isProductAuthor } = require("./middleware");
 
@@ -77,9 +81,13 @@ app.get("/addProduct", isLoggedIn, (req, res) => {
   res.render("Products/addProduct.ejs");
 });
 
-app.post("/addProduct", isLoggedIn, async (req, res) => {
+app.post("/addProduct", isLoggedIn, upload.array("image"), async (req, res) => {
   //console.log(req.body.Product);
   const product = new Product(req.body.Product);
+  product.images = req.files.map((f) => ({
+    url: f.path,
+    filename: f.filename,
+  }));
   product.author = req.user._id;
   await product.save();
   res.redirect("/allProducts");
