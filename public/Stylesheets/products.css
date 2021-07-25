@@ -37,12 +37,3 @@
 .cat {
   letter-spacing: 0.1rem;
 }
-
-.cardHeight {
-  height: fit-content;
-}
-
-.stickProduct {
-  position: sticky;
-  top: 7rem;
-}

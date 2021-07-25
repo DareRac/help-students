@@ -1,13 +1,13 @@
 <% layout('layouts/boilerplate.ejs')%>
 <link rel="stylesheet" href="/stylesheets/stars.css" />
-<link rel="stylesheet" href="/stylesheets/showProduct.css" />
 
-<div class="product">
-  <div class="productInfo">
-    <div class="productImage">
+<div class="row">
+  <div class="d-flex col-6">
+    <!-- <div class="card mb-3 cardHeight stickProduct"> -->
+    <div class="card mb-3">
       <div
         id="productCarousel"
-        class="carousel slide carouselWidth"
+        class="carousel slide card-img-top carouselWidth"
         data-bs-ride="carousel"
       >
         <div class="carousel-inner">
@@ -45,46 +45,35 @@
         </button>
         <% } %>
       </div>
-    </div>
-    <div class="infoMargin">
-      <div class="titleAndCategory">
-        <div class="productTitle">
-          <p class="bold"><%= product.title %></p>
-        </div>
-        <div class="productCategory">
-          <p class="mute"><%= product.category %></p>
-        </div>
+      <div class="card-body">
+        <h5 class="card-title"><%= product.title %></h5>
+        <p class="card-text"><%= product.description %></p>
       </div>
-
-      <div class="productDescription">
-        <p class="bold">Description</p>
-        <%= product.description %>
+      <ul class="list-group list-group-flush">
+        <li class="list-group-item">Price: <%= product.price %></li>
+        <li class="list-group-item">Category: <%= product.category %></li>
+      </ul>
+      <% if( currentUser && product.author.equals(currentUser._id)) {%>
+      <div class="card-body d-flex justify-content-evenly buttonHeight">
+        <a
+          href="/showProduct/<%= product._id %>/edit"
+          class="btn btn-outline-warning card-link"
+          >Edit
+        </a>
+        <form
+          action="/showProduct/<%= product._id %>?_method=DELETE"
+          method="POST"
+        >
+          <button class="btn btn-outline-danger">Delete</button>
+        </form>
       </div>
-
-      <div class="productPrice">
-        <p class="bold">Price</p>
-        <%= product.price %>
-      </div>
+      <% } %>
     </div>
-    <% if( currentUser && product.author.equals(currentUser._id)) {%>
-    <div class="card-body d-flex justify-content-evenly buttonHeight">
-      <a
-        href="/showProduct/<%= product._id %>/edit"
-        class="btn btn-outline-warning card-link"
-        >Edit
-      </a>
-      <form
-        action="/showProduct/<%= product._id %>?_method=DELETE"
-        method="POST"
-      >
-        <button class="btn btn-outline-danger">Delete</button>
-      </form>
-    </div>
-    <% } %>
   </div>
 
-  <div class="productReview">
-    <div class="reviewForm">
+  <!-- <div id="map"></div> -->
+  <div class="col-6">
+    <div class="scroll">
       <% if(currentUser){ %>
       <h2>Leave a Review</h2>
       <form
@@ -153,10 +142,7 @@
         </div>
         <button class="btn btn-success">Submit</button>
       </form>
-      <% } %>
-    </div>
-    <div class="reviews">
-      <% for(let review of product.reviews) { %>
+      <% } %> <% for(let review of product.reviews) { %>
       <div class="card mb-3">
         <div class="card-body">
           <p class="starability-result" data-rating="<%=review.rating%>">
@@ -179,3 +165,28 @@
     </div>
   </div>
 </div>
+
+<!-- <div class="formAndReview">
+<form action="/showProduct/<%=// product._id %>/review" method="POST" class="reviewForm">
+  <label for="review" class="form-label">Review</label>
+  <textarea name="review[body]" id="review" cols="30" rows="10" class="form-control"></textarea>
+  <label for="rating" class="form-label">Rating</label>
+  <input type="number" name="review[rating]" id="rating" class="form-control" />
+  <button type="submit" class="btn btn-success" style="margin-top: 5px;">Add Review</button>
+</form>
+
+<div>
+  <%// for(let review of product.reviews){ %>
+  <div>
+    Review: <%=// review.body %> Rating: <%=// review.rating %>
+    <form
+      action="/showProduct/<%=// product._id %>/review/<%=// review._id %>?_method=DELETE"
+      method="POST"
+    >
+      <button class="btn btn-outline-danger">Delete</button>
+    </form>
+  </div>
+
+  <% //} %>
+</div>
+</div> -->

@@ -84,12 +84,13 @@ app.get("/addProduct", isLoggedIn, (req, res) => {
 app.post("/addProduct", isLoggedIn, upload.array("image"), async (req, res) => {
   //console.log(req.body.Product);
   const product = new Product(req.body.Product);
-  product.images = req.files.map((f) => ({
+  product.image = req.files.map((f) => ({
     url: f.path,
     filename: f.filename,
   }));
   product.author = req.user._id;
   await product.save();
+  //console.log(product.image);
   res.redirect("/allProducts");
 });
 
