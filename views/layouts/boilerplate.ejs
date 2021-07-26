@@ -11,12 +11,17 @@
       integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
       crossorigin="anonymous"
     />
+
+    <!-- <style>
+      * {
+        margin: 0;
+        padding: 0;
+      }
+    </style> -->
   </head>
   <body class="d-flex flex-column vh-100">
     <%- include('../partials/navbar')%>
-    <main class="container mt-5">
-      <%- include('../partials/flash')%><%- body %>
-    </main>
+    <main class="mt-5"><%- include('../partials/flash')%><%- body %></main>
     <%- include('../partials/footer')%>
 
     <script

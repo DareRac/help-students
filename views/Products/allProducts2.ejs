@@ -13,3 +13,36 @@
   </div>
   <% } %>
 </div>
+
+<% layout('layouts/boilerplate.ejs')%>
+<link rel="stylesheet" href="/stylesheets/product.css" />
+
+<div class="container">
+  <div class="row">
+    <% for(let product of products){ %>
+    <div class="col-lg-4 col-sm-6 mb-3">
+      <div class="card">
+        <img
+          src="<%= product.image %>"
+          class="card-img-top productImage"
+          alt="..."
+        />
+        <div class="card-body">
+          <div class="d-flex align-items-baseline justify-content-between">
+            <h3 class="card-title ms-2"><%= product.title %></h3>
+            <h5 class="card-title me-2 text-muted cat">
+              <%= product.category %>
+            </h5>
+          </div>
+          <p><%= product.price %></p>
+          <a
+            href="showProduct/<%= product._id %>"
+            class="btn btn-outline-info col-8 offset-2"
+            >Show Product</a
+          >
+        </div>
+      </div>
+    </div>
+    <% } %>
+  </div>
+</div>

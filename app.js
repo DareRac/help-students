@@ -14,6 +14,7 @@ const LocalStrategy = require("passport-local");
 const multer = require("multer");
 const { storage } = require("./Cloudinary/index");
 const upload = multer({ storage });
+const GoogleStrategy = require("passport-google-oauth20").Strategy;
 
 const { isLoggedIn, isReviewAuthor, isProductAuthor } = require("./middleware");
 
@@ -67,7 +68,20 @@ app.use((req, res, next) => {
   res.locals.currentUser = req.user; // req.user humei user ka email , username , id(mongoose wali) .... ab mei ise pure project mei kahi bhi use kr skta hu...ab hum login aur register wala option navbar mei tab hi dikhayenge jab currentUser exist nhi krega ..aur agar currentUser exist krega toh hum sirf logout wala option show krenge.... req.user humei passport ki help se mila h ... passport sab kuch behind the scene kr deta h .....
   next();
 });
-
+// passport.use(
+//   new GoogleStrategy(
+//     {
+//       clientID: GOOGLE_CLIENT_ID,
+//       clientSecret: GOOGLE_CLIENT_SECRET,
+//       callbackURL: "http://www.example.com/auth/google/callback",
+//     },
+//     function (accessToken, refreshToken, profile, cb) {
+//       User.findOrCreate({ googleId: profile.id }, function (err, user) {
+//         return cb(err, user);
+//       });
+//     }
+//   )
+// );
 passport.serializeUser(User.serializeUser()); // cookie ko bana dega aur store kr lega login krne pr
 passport.deserializeUser(User.deserializeUser()); // cookie ko destroy kr dega logout krne pr :)
 
@@ -224,6 +238,18 @@ app.get("/logout", (req, res) => {
   req.flash("success", "Successfully Logged Out!");
   res.redirect("/allProducts");
 });
+
+app.get(
+  "/auth/google",
+  passport.authenticate("google", { scope: ["profile"] })
+);
+
+// app.get('/auth/google/callback',
+//   passport.authenticate('google', { failureRedirect: '/login' }),
+//   function(req, res) {
+//     // Successful authentication, redirect home.
+//     res.redirect('/');
+//   });
 
 const port = 3000;
 
