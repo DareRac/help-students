@@ -6,11 +6,13 @@
 .productImage {
   background: white;
   border-radius: 1rem;
-  height: 30rem;
 }
 
 img {
-  border-radius: 1rem;
+  border-top-left-radius: 1rem;
+  border-top-right-radius: 1rem;
+  height: 400px;
+  object-fit: contain;
 }
 
 .productReview {

@@ -1,6 +1,15 @@
 <% layout('layouts/boilerplate.ejs')%>
 <link rel="stylesheet" href="/stylesheets/products.css" />
 
+<div class="button-container">
+  <a class="filter-button">All</a>
+  <a class="filter-button">Electronics</a>
+  <a class="filter-button">Living</a>
+  <a class="filter-button">Sports</a>
+  <a class="filter-button">Stationary</a>
+  <a class="filter-button">Others</a>
+</div>
+
 <div class="section-center">
   <% for(let product of products){ %>
   <article class="menu-item">

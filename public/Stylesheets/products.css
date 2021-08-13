@@ -196,12 +196,12 @@ Menu
   margin-left: auto;
   margin-right: auto;
 }
-.btn-container {
+.button-container {
   margin-bottom: 4rem;
   display: flex;
   justify-content: center;
 }
-.filter-btn {
+.filter-button {
   background: transparent;
   border-color: transparent;
   font-size: 1rem;
@@ -214,7 +214,7 @@ Menu
   transition: var(--transition);
   border-radius: var(--radius);
 }
-.filter-btn:hover {
+.filter-button:hover {
   background: var(--clr-gold);
   color: var(--clr-white);
 }

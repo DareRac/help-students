@@ -52,12 +52,13 @@
       <div class="mb-2">
         <label for="image" class="form-label">Image</label>
         <input
-          type="text"
+          type="file"
           class="form-control"
           id="image"
-          name="Product[image]"
+          name="image"
           value="<%= product.image %>"
           required
+          multiple
         />
         <div class="valid-feedback">Looks good!</div>
       </div>
